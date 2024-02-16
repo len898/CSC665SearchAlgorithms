@@ -27,9 +27,10 @@ vaslui = Node("Vaslui")
 zerind = Node("Zerind")
 
 # Adding neighbors for each city (assuming an undirected graph)
-arad.add_neighbor(sibiu)
-arad.add_neighbor(timisoara)
+
 arad.add_neighbor(zerind)
+arad.add_neighbor(timisoara)
+arad.add_neighbor(sibiu)
 
 bucharest.add_neighbor(fagaras)
 bucharest.add_neighbor(giurgiu)
@@ -66,8 +67,8 @@ neamt.add_neighbor(iasi)
 
 oradea.add_neighbor(zerind)
 
-pitesti.add_neighbor(bucharest)
 pitesti.add_neighbor(craiova)
+pitesti.add_neighbor(bucharest)
 pitesti.add_neighbor(rimnicu_vilcea)
 
 rimnicu_vilcea.add_neighbor(craiova)
@@ -76,6 +77,7 @@ rimnicu_vilcea.add_neighbor(sibiu)
 
 sibiu.add_neighbor(arad)
 sibiu.add_neighbor(fagaras)
+
 sibiu.add_neighbor(rimnicu_vilcea)
 
 timisoara.add_neighbor(arad)
@@ -106,8 +108,43 @@ priority_queue = queue.PriorityQueue()
 visited_1 = {}
 visited_2 = {}
 visited_3 = {}
+
 # Task 4
 
 # Task 5
 
+
+def depthFirstSearch(initial_node, goal_state):
+    lifo_queue = [[initial_node]]
+    explored_cities = []
+    cost = 0
+
+    while lifo_queue:
+        cost += 1
+        path = lifo_queue.pop()
+
+        last_node = path[-1]
+
+        if last_node == goal_state:
+            return path, explored_cities, cost
+        else:
+            for node in last_node.neighbors:
+                if node in explored_cities:
+                    continue
+                if node in lifo_queue:
+                    continue
+                explored_cities.append(node)
+                new_path = path + [node]
+                lifo_queue.append(new_path)
+
+    print(f'No path exists between {initial_node} and {goal_state}')
 # Task 6
+    
+p, ec,c = depthFirstSearch(arad, bucharest)
+print('-'*25)
+print(p)
+print('Explored Path')
+print(c)
+print('-'*25)
+print('Explored cities', ec)
+print('Cost', c)
