@@ -164,7 +164,11 @@ def depthFirstSearch(initial_node, goal_state):
         last_node = path[-1]
 
         if last_node == goal_state:
-            return path, explored_cities
+            pathString = str(path.pop(0))
+            for city in path:
+                pathString += " --> " + str(city)
+            print(pathString)
+            return
         else:
             for node in last_node.neighbors:
                 if node in explored_cities:
@@ -178,14 +182,8 @@ def depthFirstSearch(initial_node, goal_state):
     print(f'No path exists between {initial_node} and {goal_state}')
 
     
-p, ec = depthFirstSearch(arad, bucharest)
-print('-'*25)
-print('Explored Path')
-print(p)
-print('-'*25)
-print('Explored cities')
-print(ec)
-print('-'*25)
+depthFirstSearch(arad, neamt)
+
 
 
 # Task 6
