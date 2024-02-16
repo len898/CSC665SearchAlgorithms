@@ -156,17 +156,15 @@ def breadthFirstSearch(initial_node, goal_state):
 
 def depthFirstSearch(initial_node, goal_state):
     lifo_queue = [[initial_node]]
-    explored_cities = []
-    cost = 0
+    explored_cities = [initial_node]
 
     while lifo_queue:
-        cost += 1
         path = lifo_queue.pop()
-
+ 
         last_node = path[-1]
 
         if last_node == goal_state:
-            return path, explored_cities, cost - 1
+            return path, explored_cities
         else:
             for node in last_node.neighbors:
                 if node in explored_cities:
@@ -180,13 +178,14 @@ def depthFirstSearch(initial_node, goal_state):
     print(f'No path exists between {initial_node} and {goal_state}')
 
     
-p, ec,c = depthFirstSearch(arad, bucharest)
+p, ec = depthFirstSearch(arad, bucharest)
 print('-'*25)
-print(p)
 print('Explored Path')
-print(c)
+print(p)
 print('-'*25)
-print('Explored cities', ec)
-print('Cost', c)
+print('Explored cities')
+print(ec)
+print('-'*25)
+
 
 # Task 6
