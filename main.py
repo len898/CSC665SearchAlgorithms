@@ -179,7 +179,7 @@ def depthFirstSearch(initial_node, goal_state):
                 new_path = path + [node]
                 lifo_queue.append(new_path)
 
-    print(f'No path exists between {initial_node} and {goal_state}')
+    print(f'failure: No path found')
 
     
 depthFirstSearch(arad, neamt)
