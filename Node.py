@@ -7,4 +7,5 @@ class Node:
         self.neighbors.append(neighbor_city)
 
     def __repr__(self):
-        return f"Node(city_name={self.city_name})"
+        return self.city_name
+    
