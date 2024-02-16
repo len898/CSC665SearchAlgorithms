@@ -65,6 +65,8 @@ mehadia.add_neighbor(lugoj)
 neamt.add_neighbor(iasi)
 
 oradea.add_neighbor(zerind)
+oradea.add_neighbor(sibiu)
+
 
 pitesti.add_neighbor(bucharest)
 pitesti.add_neighbor(craiova)
@@ -77,6 +79,7 @@ rimnicu_vilcea.add_neighbor(sibiu)
 sibiu.add_neighbor(arad)
 sibiu.add_neighbor(fagaras)
 sibiu.add_neighbor(rimnicu_vilcea)
+sibiu.add_neighbor(oradea)
 
 timisoara.add_neighbor(arad)
 timisoara.add_neighbor(lugoj)
@@ -106,33 +109,46 @@ priority_queue = queue.PriorityQueue()
 visited_1 = set()
 visited_2 = set()
 visited_3 = set()
+
 # Task 4
 # Breadth First Search
 def breadthFirstSearch(initial_node, goal_state):
     found = False
     fifo_queue.put(initial_node)
     visited_1.add(initial_node)
-    path = ""
+    parent = {}  #dict for storing the parents
+    parent[initial_node] = None
+
     while not fifo_queue.empty():
         node = fifo_queue.get()
         visited_1.add(node)
-        path += str(node) + " "
         if node == goal_state:
             found = True
             break
-        path += "--> "
         for neighbor in node.neighbors:
             if neighbor not in visited_1:
                 fifo_queue.put(neighbor)
+                parent[neighbor] = node #store the parent 
     
     if found:
-        print(path)
+        destination = goal_state
+        path = []
+        while destination is not None:
+            path.append(destination)
+            destination = parent[destination]
+
+        path.reverse()
+        # printing the path to our destination city
+        pathString = str(path.pop(0))
+        for city in path:
+            pathString += " --> " + str(city)
+        
+        print(pathString)
+
     else:
         print("City not found")
     
                 
-
-breadthFirstSearch(arad, bucharest)
 
 # Task 5
 
