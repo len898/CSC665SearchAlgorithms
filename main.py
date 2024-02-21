@@ -187,3 +187,134 @@ depthFirstSearch(arad, neamt)
 
 
 # Task 6
+# Uniform Cost Search
+
+from Node import UniformNode
+
+# Re-initialize the search tree with path costs
+arad = UniformNode("Arad")
+bucharest = UniformNode("Bucharest")
+craiova = UniformNode("Craiova")
+drobeta = UniformNode("Drobeta")
+eforie = UniformNode("Eforie")
+fagaras = UniformNode("Fagaras")
+giurgiu = UniformNode("Giurgiu")
+hirsova = UniformNode("Hirsova")
+iasi = UniformNode("Iasi")
+lugoj = UniformNode("Lugoj")
+mehadia = UniformNode("Mehadia")
+neamt = UniformNode("Neamt")
+oradea = UniformNode("Oradea")
+pitesti = UniformNode("Pitesti")
+rimnicu_vilcea = UniformNode("Rimnicu Vilcea")
+sibiu = UniformNode("Sibiu")
+timisoara = UniformNode("Timisoara")
+urziceni = UniformNode("Urziceni")
+vaslui = UniformNode("Vaslui")
+zerind = UniformNode("Zerind")
+
+arad.add_neighbor(zerind, 75)
+arad.add_neighbor(timisoara, 118)
+arad.add_neighbor(sibiu, 140)
+
+bucharest.add_neighbor(fagaras, 211)
+bucharest.add_neighbor(giurgiu, 90)
+bucharest.add_neighbor(pitesti, 101)
+bucharest.add_neighbor(urziceni, 85)
+
+craiova.add_neighbor(drobeta, 120)
+craiova.add_neighbor(pitesti, 138)
+craiova.add_neighbor(rimnicu_vilcea, 146)
+
+drobeta.add_neighbor(craiova, 120)
+drobeta.add_neighbor(mehadia, 75)
+
+eforie.add_neighbor(hirsova, 86)
+
+fagaras.add_neighbor(bucharest, 211)
+fagaras.add_neighbor(sibiu, 99)
+
+giurgiu.add_neighbor(bucharest, 90)
+
+hirsova.add_neighbor(eforie, 86)
+hirsova.add_neighbor(urziceni, 98)
+
+iasi.add_neighbor(neamt, 87)
+iasi.add_neighbor(vaslui, 92)
+
+lugoj.add_neighbor(mehadia, 70)
+lugoj.add_neighbor(timisoara, 111)
+
+mehadia.add_neighbor(drobeta, 75)
+mehadia.add_neighbor(lugoj, 70)
+
+neamt.add_neighbor(iasi, 87)
+
+oradea.add_neighbor(zerind, 71)
+oradea.add_neighbor(sibiu, 151)
+
+pitesti.add_neighbor(craiova, 138)
+pitesti.add_neighbor(bucharest, 101)
+pitesti.add_neighbor(rimnicu_vilcea, 97)
+
+rimnicu_vilcea.add_neighbor(craiova, 146)
+rimnicu_vilcea.add_neighbor(pitesti, 97)
+rimnicu_vilcea.add_neighbor(sibiu, 80)
+
+sibiu.add_neighbor(arad, 140)
+sibiu.add_neighbor(fagaras, 99)
+sibiu.add_neighbor(rimnicu_vilcea, 80)
+sibiu.add_neighbor(oradea, 151)
+
+timisoara.add_neighbor(arad, 118)
+timisoara.add_neighbor(lugoj, 111)
+
+urziceni.add_neighbor(bucharest, 85)
+urziceni.add_neighbor(hirsova, 98)
+urziceni.add_neighbor(vaslui, 142)
+
+vaslui.add_neighbor(iasi, 92)
+vaslui.add_neighbor(urziceni, 142)
+
+zerind.add_neighbor(arad, 75)
+zerind.add_neighbor(oradea, 71)
+
+cities = [arad, bucharest, craiova, drobeta, eforie, fagaras, giurgiu, hirsova, iasi, lugoj,
+          mehadia, neamt, oradea, pitesti, rimnicu_vilcea, sibiu, timisoara, urziceni, vaslui, zerind]
+
+
+def uniformCostSearch(initial_node, goal_state):
+    priority_queue.put((0, initial_node))  
+    visited = set()
+    parent = {initial_node: None}
+    cost_so_far = {initial_node: 0}
+
+    while not priority_queue.empty():
+        current_cost, current_node = priority_queue.get()
+
+        if current_node == goal_state:
+           
+            path = []
+            while current_node is not None:
+                path.append(current_node)
+                current_node = parent[current_node]
+            path.reverse()
+            total_cost = cost_so_far[goal_state]
+            pathString = ' --> '.join(str(city) for city in path) + f" (Total Cost: {total_cost})"
+            print(pathString)
+            return
+
+        visited.add(current_node)
+
+        for neighbor, neighbor_cost in current_node.neighbors.items():
+            new_cost = cost_so_far[current_node] + neighbor_cost
+
+            if neighbor not in cost_so_far or new_cost < cost_so_far[neighbor]:
+                cost_so_far[neighbor] = new_cost
+                priority_queue.put((new_cost, neighbor))
+                parent[neighbor] = current_node
+
+    print("City not found")
+
+
+uniformCostSearch(arad, neamt)
